@@ -3,7 +3,7 @@ import { pluginVer } from './components/Changelog.js'
 
 logger.info(`cv移植插件${pluginVer}初始化~~~`)
 
-const files = fs.readdirSync('./plugins/mora-plugin/apps').filter(file => file.endsWith('.js'))
+const files = fs.readdirSync('./plugins/migrate-plugin/apps').filter(file => file.endsWith('.js'))
 let ret = []
 
 files.forEach((file) => {
