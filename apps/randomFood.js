@@ -32,6 +32,7 @@ export class randomFood extends plugin {
 
     let food = _.concat(_.map(xyfood, v => `${xy}/${v}`), _.map(alfood, v => `${al}/${v}`))
 
-    await this.e.reply(segment.image(`file://${_.sample(food)}`))
+    await this.e.reply([`${this.e.bot.nickname}帮你选出这个捏，要试试看嘛?`, segment.image(`file://${_.sample(food)}`)])
+    return true
   }
 }
