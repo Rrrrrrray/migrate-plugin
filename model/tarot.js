@@ -38,7 +38,7 @@ export default class tarot extends base {
       msg.push(await this.getTextImg(v))
     })
 
-    await common.makeForwardMsg(this.e, msg, '塔罗牌占卜结果')
+    return await common.makeForwardMsg(this.e, msg, '塔罗牌占卜结果')
   }
 
   pickTheme () {
@@ -67,6 +67,6 @@ export default class tarot extends base {
       cardInfo.push(segment.image(`base64://${img}`))
     }
 
-    return msg
+    return cardInfo
   }
 }
