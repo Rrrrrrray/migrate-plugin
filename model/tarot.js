@@ -14,12 +14,14 @@ export default class tarot extends base {
   }
 
   async tarot () {
+    this.pickTheme()
     let card = this.randomCards(this.info.cards)
-    let msg = await this.getTextImg(card)
+    let msg = await this.getTextImg(card[0])
     return msg
   }
 
   async divine () {
+    this.pickTheme()
     let formName = _.sample(_.keys(this.info.formations))
     let formation = this.info.formations[formName]
     await this.e.reply(`启用${formName}，正在洗牌中`)
@@ -41,7 +43,7 @@ export default class tarot extends base {
 
   pickTheme () {
     let themes = _.filter(fs.readdirSync(this.path, { withFileTypes: true }), f => f.isDirectory())
-    this.path += _.sample(themes)
+    this.path += _.sample(themes).name
   }
 
   randomCards (cards, num = 1) {
@@ -55,14 +57,14 @@ export default class tarot extends base {
     let imgs = fs.readdirSync(path)
     path += _.filter(imgs, i => i.includes(card.pic))[0]
 
-    let msg = []
+    let cardInfo = []
     if (_.random(1, true) < 0.5) {
-      msg.push(`回应是「${card.name_cn}正位」「${card.meaning.up}」\n`)
-      msg.push(segment.image(`file://${path}`))
+      cardInfo.push(`回应是「${card.name_cn}正位」「${card.meaning.up}」\n`)
+      cardInfo.push(segment.image(`file://${path}`))
     } else {
-      msg.push(`回应是「${card.name_cn}逆位」「${card.meaning.down}」\n`)
+      cardInfo.push(`回应是「${card.name_cn}逆位」「${card.meaning.down}」\n`)
       let img = await sharp(path).flip().toBuffer().then(buffer => buffer.toString('base64'))
-      msg.push(segment.image(`base64://${img}`))
+      cardInfo.push(segment.image(`base64://${img}`))
     }
 
     return msg
