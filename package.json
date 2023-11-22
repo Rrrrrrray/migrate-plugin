@@ -1,0 +1,11 @@
+{
+  "name": "migrate-plugin",
+  "version": "0.0.2",
+  "description": "Yunzai-Bot插件",
+  "main": "index.js",
+  "type": "module",
+  "dependencies": {
+    "sharp": "^0.32.6"
+  },
+  "author": "Rrrrrrray"
+}

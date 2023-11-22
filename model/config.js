@@ -28,8 +28,18 @@ class Cfg {
   defSetCopy (name) {
     name += '.yaml'
     if (!fs.existsSync(this.user)) fs.mkdirSync(this.user)
-
     if (!fs.existsSync(this.user + name)) fs.copyFileSync(this.def + name, this.user + name)
+  }
+
+  getResPath (name) {
+    let path = `${pluginPath}/resources/`
+    switch (name) {
+      case 'tarot':
+        path += 'tarot/'
+        break
+    }
+
+    return path
   }
 }
 
