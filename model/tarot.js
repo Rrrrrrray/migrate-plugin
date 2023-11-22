@@ -32,11 +32,13 @@ export default class tarot extends base {
     if (formName === '圣三角牌阵') represent = _.sample(represent)
 
     let msg = []
-    for (const k in cards) {
-      if (cards[k].is_cut && k === num - 1) msg.push(`切牌「${represent[k]}」\n`)
-      else msg.push(`第${k + 1}张牌「${represent[k]}」\n`)
+    for (let k in cards) {
+      k = Number(k)
+      let cardreply = []
+      if (formation.is_cut && k == num - 1) cardreply.push(`切牌「${represent[k]}」\n`)
+      else cardreply.push(`第${k + 1}张牌「${represent[k]}」\n`)
 
-      let cardreply = await this.getTextImg(cards[k])
+      cardreply = _.concat(cardreply, await this.getTextImg(cards[k]))
       msg.push(cardreply)
     }
     return await common.makeForwardMsg(this.e, msg, '塔罗牌占卜结果')
@@ -57,9 +59,6 @@ export default class tarot extends base {
     let path = `${this.path}/${card.type}/`
     let imgs = fs.readdirSync(path)
     path += _.filter(imgs, i => i.includes(card.pic))[0]
-    if (path.includes('undefined')) {
-      logger.info(card.pic)
-    }
 
     let cardInfo = []
     if (_.random(1, true) < 0.5) {
