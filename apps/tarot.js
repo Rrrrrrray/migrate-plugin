@@ -13,7 +13,7 @@ export class tarot extends plugin {
       priority: 5,
       rule: [
         {
-          reg: '^#?(占卜|塔罗牌)(帮助)?$',
+          reg: '^#?(占卜|抽?塔罗牌?)(帮助)?$',
           fnc: 'tarot'
         }
       ]
@@ -29,7 +29,7 @@ export class tarot extends plugin {
 
     let msg = new Tarot(this.e)
     if (this.e.msg.includes('占卜')) msg = await msg.divine()
-    if (this.e.msg.includes('塔罗牌')) msg = await msg.tarot()
+    if (this.e.msg.includes('塔罗')) msg = await msg.tarot()
 
     if (!msg) return false
     await this.e.reply(msg)
