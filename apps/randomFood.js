@@ -1,7 +1,6 @@
 import plugin from '../../../lib/plugins/plugin.js'
 import fs from 'node:fs'
 import _ from 'lodash'
-
 /**
  * @author Rrrrrrray
  */
@@ -27,10 +26,14 @@ export class randomFood extends plugin {
     if (!fs.existsSync(al)) al = './plugins/atlas/Genshin-Atlas/food'
     if (!fs.existsSync(xy) && !fs.existsSync(al)) return false
 
-    let xyfood = _.filter(fs.readdirSync(xy), v => v !== '.keep')
-    let alfood = fs.readdirSync(al)
+    const xyfood = fs.readdirSync(xy).reduce((acc, v) => {
+      if (v !== '.keep') acc.push(`${xy}/${v}`)
+      return acc
+    }, [])
 
-    let food = _.concat(_.map(xyfood, v => `${xy}/${v}`), _.map(alfood, v => `${al}/${v}`))
+    const alfood = fs.existsSync(al) ? fs.readdirSync(al).map(v => `${al}/${v}`) : []
+
+    const food = xyfood.concat(alfood)
 
     await this.e.reply([`${this.e.bot.nickname}帮你选出这个捏，要试试看嘛?`, segment.image(`file://${_.sample(food)}`)])
     return true
